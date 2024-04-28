@@ -1,14 +1,11 @@
+/*
+Copyright © 2024 NAME HERE <EMAIL ADDRESS>
+
+*/
 package main
 
-import (
-	"log"
-
-	"nemesis-cli/src"
-)
+import "nemesis-cli/cmd"
 
 func main() {
-	if err := src.NemesisCli(); err != nil {
-		log.Fatal("Error: ", err)
-		
-	}
+	cmd.Execute()
 }
