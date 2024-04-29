@@ -5,6 +5,7 @@ package cmd
 
 import (
 	"fmt"
+
 	"nemesis-cli/src/app"
 
 	"github.com/spf13/cobra"
@@ -17,10 +18,23 @@ var organizationsCmd = &cobra.Command{
 	Long:  `Use this command to get organizations infos from the database.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
+		name := cmd.Flag("name").Value.String()
+		id := cmd.Flag("id").Value.String()
+
+		if name != "" && id != "" {
+			fmt.Println("Please provide only a name or an id")
+			return
+		}
+
 		if all, _ := cmd.Flags().GetBool("all"); all {
 			if err := app.Organizations("", ""); err != nil {
 				fmt.Println(err)
 			}
+			return
+		}
+
+		if name == "" && id == "" {
+			fmt.Println("Please provide a name or an id")
 			return
 		}
 
