@@ -9,6 +9,7 @@ import (
 	"os"
 
 	"github.com/aquasecurity/table"
+	"github.com/liamg/tml"
 )
 
 func Organizations(id, name string) error {
@@ -54,7 +55,7 @@ func Organizations(id, name string) error {
 		}
 
 		for _, org := range resp {
-			t.AddRow(org.ID, org.Name, org.Description)
+			t.AddRow(org.ID, tml.Sprintf("<green>%s</green>", org.Name), org.Description)
 		}
 
 		t.Render()
