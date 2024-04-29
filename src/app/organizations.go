@@ -43,7 +43,7 @@ func Organizations(id, name string) error {
 			panic(err)
 		}
 
-		t.AddRow(resp)
+		t.AddRow(resp.ID, resp.Name, resp.Description)
 		t.Render()
 	}
 
