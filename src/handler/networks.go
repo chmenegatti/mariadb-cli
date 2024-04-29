@@ -7,35 +7,41 @@ import (
 	"nemesis-cli/src/service"
 )
 
-func Index(ctx context.Context, service service.OrganizationService) (orgs []models.Organization, err error) {
-	var organizations []models.Organization
+func GetAllNetworks(ctx context.Context, service service.NetworkService) (
+	nets []models.Networks, err error,
+) {
+	var networks []models.Networks
 
-	organizations, err = service.GetAll(ctx)
+	networks, err = service.GetAll(ctx)
 	if err != nil {
 		return
 	}
 
-	return organizations, nil
+	return networks, nil
 }
 
-func Show(ctx context.Context, service service.OrganizationService, id string) (org models.Organization, err error) {
-	var organization models.Organization
+func GetByIdNetworks(ctx context.Context, service service.NetworkService, id string) (
+	net models.Networks, err error,
+) {
+	var network models.Networks
 
-	organization, err = service.GetByID(ctx, id)
+	network, err = service.GetByID(ctx, id)
 
 	if err != nil {
 		return
 	}
 
-	return organization, nil
+	return network, nil
 }
 
-func FindByName(ctx context.Context, service service.OrganizationService, name string) (orgs []models.Organization, err error) {
-	var organizations []models.Organization
-	organizations, err = service.GetByName(ctx, name)
+func GetByNameNetworks(
+	ctx context.Context, service service.NetworkService, name string,
+) (nets []models.Networks, err error) {
+	var networks []models.Networks
+	networks, err = service.GetByName(ctx, name)
 	if err != nil {
 		return
 	}
 
-	return organizations, nil
+	return networks, nil
 }

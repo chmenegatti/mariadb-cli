@@ -1,27 +1,52 @@
-/*
-Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
-*/
 package cmd
 
 import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"nemesis-cli/src/app"
 )
 
 // networksCmd represents the networks command
 var networksCmd = &cobra.Command{
 	Use:   "networks",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Get networks infos",
+	Long:  `Use this command to get networks infos from the database.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("networks called")
+		name := cmd.Flag("name").Value.String()
+		id := cmd.Flag("id").Value.String()
+
+		if name != "" && id != "" {
+			fmt.Println("Please provide only a name or an id")
+			return
+		}
+
+		if all, _ := cmd.Flags().GetBool("all"); all {
+			if err := app.Networks("", ""); err != nil {
+				fmt.Println(err)
+			}
+			return
+		}
+
+		if name == "" && id == "" {
+			fmt.Println("Please provide a name or an id")
+			return
+		}
+
+		if id, _ := cmd.Flags().GetString("id"); id != "" {
+			if err := app.Networks(id, ""); err != nil {
+				fmt.Println(err)
+			}
+			return
+		}
+
+		if name, _ := cmd.Flags().GetString("name"); name != "" {
+			if err := app.Networks("", name); err != nil {
+				fmt.Println(err)
+			}
+			return
+		}
+
 	},
 }
 
@@ -37,4 +62,9 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// networksCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
+	networksCmd.Flags().BoolP("all", "a", false, "Get all Networks")
+	networksCmd.Flags().StringP("id", "i", "", "Get network by id")
+	networksCmd.Flags().StringP("name", "n", "", "Filter networks by name")
+
 }
