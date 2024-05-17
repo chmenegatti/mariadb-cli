@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Organization struct {
-	ID               string    `json:",omitempty"`
+	Id               string    `json:",omitempty"`
 	Name             string    `json:",omitempty"`
 	TierProvider     string    `json:",omitempty"`
 	BackupCluster    string    `json:",omitempty"`
